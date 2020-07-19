@@ -4,17 +4,21 @@ import { GitHubContext } from './../context/gitHub/gitHubContext';
 
 export const Search = () => {
   const [value, setValue] = useState('');
-  const { show } = useContext(AlertContext);
+  const alert = useContext(AlertContext);
   const github = useContext(GitHubContext);
 
   const onSubmit = (e) => {
     if (e.key !== 'Enter') {
       return;
     }
+
+    github.clearUsers();
+
     if (value.trim()) {
+      alert.hide();
       github.searchUsers(value.trim());
     } else {
-      show('Enter correct username');
+      alert.show('Enter correct username');
     }
   };
 
