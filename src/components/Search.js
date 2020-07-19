@@ -1,16 +1,18 @@
 import React, { useContext, useState } from 'react';
 import { AlertContext } from './../context/alert/alertContext';
+import { GitHubContext } from './../context/gitHub/gitHubContext';
 
 export const Search = () => {
   const [value, setValue] = useState('');
   const { show } = useContext(AlertContext);
+  const github = useContext(GitHubContext);
 
   const onSubmit = (e) => {
     if (e.key !== 'Enter') {
       return;
     }
     if (value.trim()) {
-      console.log(`Make request with ${value}`);
+      github.searchUsers(value.trim());
     } else {
       show('Enter correct username');
     }
